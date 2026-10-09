@@ -29,7 +29,7 @@ say the simple thing plainly. If a term appears before it's explained,
 check the glossary — and if something's still confusing, that's the
 guide's fault, not yours.
 
-This is the prompt used to generate these documents:
+## This is the prompt used to generate these documents
 
 Create simple plaintext documents that describe AI concepts in simple language describing the terms in easy to understand language, what toks are, what the stats mean when your looking at a model description on hugging face and anything else useful for developing a good understanding for AI with an aim toward home lab setup and use. Divide into separate documents by category if applicable.
 

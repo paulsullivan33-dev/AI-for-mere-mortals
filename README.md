@@ -1,10 +1,19 @@
 # AI for Mere Mortals
 
 Plain-language guides to understanding AI, written for people who want to
-actually run it — especially on their own computers at home.
+use it thoughtfully and understand what's happening — including when
+running it on their own computers at home.
 
 No math degree required. No hype. Just what things are, why they matter,
-and how they connect to running models yourself.
+and how to get useful help while checking the results.
+
+## Start with everyday AI
+
+[Getting Useful Help from AI](getting-useful-help.md) covers clear
+requests, useful context, and improving an answer in small rounds.
+[When Should You Trust an AI Answer?](trusting-ai-answers.md) explains
+how to judge claims, check sources, and match verification to the task.
+Both apply to hosted chatbots and local models.
 
 ## Start here on Windows
 
@@ -31,9 +40,13 @@ versions, measurements, and remaining checks, with a repeatable script.
 7. [Open WebUI, In Depth](open-webui-guide.md) — the private
    ChatGPT-style web page: install, documents and RAG, functions,
    users, and common setups.
-8. [RAG and Embeddings](rag-and-embeddings.md) — teaching a model about
-   *your* documents.
-9. [Glossary](glossary.md) — quick definitions, A to Z.
+8. [RAG and Embeddings](rag-and-embeddings.md) — supplying relevant passages
+   from *your* documents.
+9. [Getting Useful Help from AI](getting-useful-help.md) — goals, context,
+   examples, and useful follow-ups.
+10. [When Should You Trust an AI Answer?](trusting-ai-answers.md) — evidence,
+    citations, uncertainty, and checking what matters.
+11. [Glossary](glossary.md) — quick definitions, A to Z.
 
 ## A note on language
 

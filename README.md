@@ -20,9 +20,12 @@ and how they connect to running models yourself.
    CPU vs GPU, and the settings that matter (Ollama-focused).
 6. [Ollama, In Depth](ollama-guide.md) — every command, every useful
    setting, front ends and utilities, and common use cases.
-7. [RAG and Embeddings](rag-and-embeddings.md) — teaching a model about
+7. [Open WebUI, In Depth](open-webui-guide.md) — the private
+   ChatGPT-style web page: install, documents and RAG, functions,
+   users, and common setups.
+8. [RAG and Embeddings](rag-and-embeddings.md) — teaching a model about
    *your* documents.
-8. [Glossary](glossary.md) — quick definitions, A to Z.
+9. [Glossary](glossary.md) — quick definitions, A to Z.
 
 ## A note on language
 

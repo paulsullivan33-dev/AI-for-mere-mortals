@@ -66,11 +66,11 @@ The two doors you will use most:
 
 - **`/api/chat`** — send messages, get a reply. This is what chat
   apps use.
-- **`/api/embeddings`** — turn text into number-lists for search.
+- **`/api/embed`** — turn text into number-lists for search.
   This is what [RAG](rag-and-embeddings.md) uses.
 
-A quick taste with `curl` (a tool that fetches web pages from the
-terminal):
+A quick taste with `curl` in Bash (Linux/macOS). For Windows PowerShell,
+use the example immediately below it:
 
 ```
 curl http://localhost:11434/api/chat -d '{
@@ -78,6 +78,19 @@ curl http://localhost:11434/api/chat -d '{
   "messages": [{"role": "user", "content": "Say hi in five words."}],
   "stream": false
 }'
+```
+
+In **Windows PowerShell**, use its built-in HTTP tool instead of `curl`
+(which is an alias in Windows PowerShell 5.1):
+
+```powershell
+$chatBody = @{
+  model = 'llama3.2:3b'
+  messages = @(@{ role = 'user'; content = 'Say hi in five words.' })
+  stream = $false
+} | ConvertTo-Json -Depth 5
+$chatReply = Invoke-RestMethod -Uri 'http://localhost:11434/api/chat' -Method Post -ContentType 'application/json' -Body $chatBody
+$chatReply.message.content
 ```
 
 You get back a JSON reply with the model's answer. `"stream": false`
@@ -100,7 +113,7 @@ useful ones, in plain words:
   Low (0.2) = careful and repeatable, good for facts and summaries.
   High (1.2+) = creative and surprising, good for stories and
   brainstorming.
-- **`num_ctx`** (default 4096): how many tokens the model can see at
+- **`num_ctx`** (default depends on your model and setup): how many tokens the model can see at
   once. Bigger handles longer documents but eats RAM and slows down.
   (See [Running Models at Home](running-models-at-home.md).)
 - **`num_predict`** (default: no limit): the longest answer allowed,
@@ -108,22 +121,53 @@ useful ones, in plain words:
 - **`top_p`** (default 0.9): another creativity knob — lower means
   the model only picks from its safest guesses. Most people leave
   this alone and just use temperature.
-- **`repeat_penalty`** (default 1.1): how hard the model tries not
+- **`repeat_penalty`**: how hard the model tries not
   to repeat itself. Raise it if a model loops the same phrase.
 - **`seed`**: a fixed starting number makes answers repeatable —
   same prompt, same answer. Handy for testing.
-- **`think`** (true/false): for reasoning models like qwen3 and
-  deepseek-r1, whether it shows its work. `false` is faster for
-  simple questions.
 - **`stop`**: words that tell the model "end your answer here."
 
-From the command line, pass them like this:
+In an interactive chat started with `ollama run llama3.2:3b`, enter:
 
-```
-ollama run llama3.2:3b -- --temperature 0.2 --num-ctx 8192
+```text
+/set parameter temperature 0.2
+/set parameter num_ctx 8192
 ```
 
-(The `--` separates Ollama's own flags from the model's options.)
+These are chat commands, not PowerShell commands. For saved defaults,
+use `PARAMETER` lines in a [Modelfile](#custom-models-the-modelfile).
+For API requests, place generation settings in `options`.
+
+**Thinking is different:** `think` is a top-level request field, alongside
+`model` and `messages`, not inside `options`. Supported values depend on
+the model; `false` requests no thinking for models that support it.
+Here is a Windows PowerShell example with a Qwen3 model:
+
+```powershell
+ollama pull qwen3:8b
+$thinkingBody = @{
+  model = 'qwen3:8b'
+  messages = @(@{ role = 'user'; content = 'Explain rain in one sentence.' })
+  stream = $false
+  think = $false
+  options = @{ temperature = 0.2; num_ctx = 8192 }
+} | ConvertTo-Json -Depth 5
+$thinkingReply = Invoke-RestMethod -Uri 'http://localhost:11434/api/chat' -Method Post -ContentType 'application/json' -Body $thinkingBody
+$thinkingReply.message.content
+```
+
+For embeddings, pull the separate embedding model, then call `/api/embed`:
+
+```powershell
+ollama pull nomic-embed-text
+$embeddingBody = @{ model = 'nomic-embed-text'; input = 'The cat sat on the mat.' } | ConvertTo-Json
+$embeddingReply = Invoke-RestMethod -Uri 'http://localhost:11434/api/embed' -Method Post -ContentType 'application/json' -Body $embeddingBody
+$embeddingReply.embeddings[0].Count
+```
+
+The last line should print a positive vector length. The older
+`/api/embeddings` endpoint uses a different request/response shape;
+don't mix examples from the two.
 
 ## Settings that change how Ollama itself behaves
 
@@ -230,7 +274,7 @@ example and grow.
 
 **4. Asking questions about your documents.**
 That's [RAG](rag-and-embeddings.md): Ollama serves the embedding
-model (`/api/embeddings`) and the chat model (`/api/chat`), and a
+model (`/api/embed`) and the chat model (`/api/chat`), and a
 small program glues them to your files. AnythingLLM does the whole
 thing with buttons instead of code.
 
@@ -260,3 +304,16 @@ correctly with no setup.
   answered by your models.
 - [Glossary](glossary.md) — API, context window, quantization, and
   the rest, A to Z.
+
+## Sources and verification
+
+Examples checked against official documentation and Ollama CLI source on
+October 10, 2026. They have not been executed on a Windows machine as
+part of this review. Record your version with `ollama --version` when
+reporting a problem; model behavior and defaults can change.
+
+- [Ollama CLI](https://docs.ollama.com/cli)
+- [CLI source and interactive commands](https://github.com/ollama/ollama/blob/main/cmd/interactive.go)
+- [Modelfile parameters](https://docs.ollama.com/modelfile)
+- [Chat API](https://docs.ollama.com/api/chat)
+- [Embedding API](https://docs.ollama.com/api/embed)

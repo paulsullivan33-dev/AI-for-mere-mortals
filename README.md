@@ -6,6 +6,11 @@ actually run it — especially on their own computers at home.
 No math degree required. No hype. Just what things are, why they matter,
 and how they connect to running models yourself.
 
+## Start here on Windows
+
+[Your first local model on Windows](windows-first-run.md) walks through
+installation, a first answer, checks that it worked, and common fixes.
+
 ## The guides
 
 1. [How LLMs Work](how-llms-work.md) — what a language model actually is,

@@ -88,7 +88,8 @@ ollama ps
 ```
 
 **Check:** immediately after a reply, the first list normally shows the
-loaded model. After `stop`, it should disappear. If enough time has
+loaded model. After `stop`, it should disappear; unloading can take a
+moment, so run `ollama ps` again after a few seconds if needed. If enough time has
 passed, Ollama may already have unloaded it automatically.
 The download stays on disk, ready for your next `ollama run`.
 
@@ -107,9 +108,12 @@ before sending private documents.
 ## Verification status and sources
 
 Reviewed against official documentation and CLI source on October 10,
-2026. **Not executed on Windows as part of this review.** The checks above
-let you verify each step on your own machine; they are expected results,
-not recorded test results. No tested Ollama version is claimed.
+2026. A [partial Windows validation](windows-validation.md) executed CLI
+chat, API chat, model listing, context settings, and unloading with
+Ollama 0.40.2 and Windows PowerShell 5.1, using an already installed
+`gemma3:1b`. The `llama3.2:1b` download stalled, so this walkthrough's
+exact model and fresh installation remain unverified. See the report
+for measurements, reproduction commands, and remaining checks.
 
 - [Windows requirements and installation](https://docs.ollama.com/windows)
 - [CLI reference](https://docs.ollama.com/cli)

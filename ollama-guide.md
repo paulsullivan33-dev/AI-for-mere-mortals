@@ -316,6 +316,10 @@ October 10, 2026. They have not been executed on a Windows machine as
 part of this review. Record your version with `ollama --version` when
 reporting a problem; model behavior and defaults can change.
 
+Subsequent [Windows validation](windows-validation.md) tested local chat
+and the embedding request with Ollama 0.40.2. It does not validate every
+example here; see the report for the exact models and remaining checks.
+
 - [Ollama CLI](https://docs.ollama.com/cli)
 - [CLI source and interactive commands](https://github.com/ollama/ollama/blob/main/cmd/interactive.go)
 - [Modelfile parameters](https://docs.ollama.com/modelfile)

@@ -18,9 +18,11 @@ and how they connect to running models yourself.
    hardware and your task.
 5. [Running Models at Home](running-models-at-home.md) — RAM math,
    CPU vs GPU, and the settings that matter (Ollama-focused).
-6. [RAG and Embeddings](rag-and-embeddings.md) — teaching a model about
+6. [Ollama, In Depth](ollama-guide.md) — every command, every useful
+   setting, front ends and utilities, and common use cases.
+7. [RAG and Embeddings](rag-and-embeddings.md) — teaching a model about
    *your* documents.
-7. [Glossary](glossary.md) — quick definitions, A to Z.
+8. [Glossary](glossary.md) — quick definitions, A to Z.
 
 ## A note on language
 

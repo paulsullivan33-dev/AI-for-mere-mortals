@@ -3,7 +3,7 @@
 [Open WebUI](https://openwebui.com) is the pretty face most people
 put in front of [Ollama](ollama-guide.md). It gives you a
 ChatGPT-style web page — chats, file uploads, voice, user accounts —
-while the models themselves run on your own machines. This guide
+with models running locally or through whichever providers you connect. This guide
 covers installing it, everything it can do, the settings that matter,
 and what people actually use it for.
 
@@ -16,6 +16,23 @@ family, or your team) a friendly chat page. One Open WebUI can talk
 to one Ollama, several Ollamas, or even paid services like OpenAI —
 and it adds things Ollama alone doesn't have: saved chats, document
 libraries, user accounts, and add-ons.
+
+## When does data stay at home?
+
+Self-hosting the interface does not decide where every request goes.
+A cloud chat provider receives the prompts sent to it. A hosted embedding
+provider receives document text and queries sent for embedding.
+Web search, voice services, document-processing services, and Functions
+can also contact outside systems.
+
+For local processing, select downloaded local chat and embedding models,
+keep document processing and any voice features local, disable external
+providers and web search, and review add-ons for outbound calls.
+Downloads and updates still need internet access. If you need a strictly
+disconnected setup, pre-download the required assets and follow the
+[official offline guide](https://docs.openwebui.com/tutorials/maintenance/offline-mode/);
+test with outbound network access blocked. An offline setting alone
+isn't proof that every enabled integration is local.
 
 ## Installing it
 
@@ -128,8 +145,12 @@ reuse. Four kinds:
 
 ## Asking about your documents (RAG)
 
-This is the feature that sells Open WebUI: chat with your own files.
-The plain-words version of [RAG](rag-and-embeddings.md):
+You can chat with your own files using [RAG](rag-and-embeddings.md).
+Retrieved passages are added to the prompt; the model's weights are
+unchanged. It can still misread a passage or invent an unsupported claim.
+Check the cited text, and ask it to say when the document lacks the answer.
+
+The basic workflow:
 
 1. **Workspace → Documents → upload** your files (PDF, TXT, DOCX,
    Markdown, and more).
@@ -149,8 +170,8 @@ precise answers; larger chunks = more context per answer.
 
 ## Web search
 
-Models only know what they were trained on — nothing after their
-cutoff date. Open WebUI can let them **search the web** mid-chat:
+A model's training cannot reliably supply current facts. Open WebUI can
+supply fresh information by letting it **search the web** mid-chat:
 **Admin Panel → Settings → Web Search** turns it on (it uses a
 search engine of your choice; some need a free API key). Then the
 model can check today's weather, look up a price, or read a fresh
@@ -182,7 +203,8 @@ need code if you want to build your own.
 The first account is the admin. **Admin Panel** covers:
 
 - **Users** — invite people, approve sign-ups, set roles (admin,
-  user, pending). Each person's chats are private to them.
+  user, pending). User separation isn't secrecy from the server operator;
+  administrators and anyone with storage or backup access may access data.
 - **Settings → Models** — which models appear, their default
   options, and pull new Ollama models straight from the web UI (no
   terminal needed).
@@ -229,17 +251,19 @@ your home models.
 **1. A private ChatGPT for the house.**
 Ollama on the always-on computer, Open WebUI in Docker on the same
 or another box, everyone bookmarks `http://<computer>:3000`. No
-accounts elsewhere, no subscription, nothing leaves the house.
+cloud subscription required when using local models. Keeping prompts
+and documents at home depends on the local configuration described above.
 
 **2. Asking about your own files.**
 Upload the appliance manuals / club bylaws / tax records to
 Workspace → Documents (or bundle them as Knowledge), attach them in
 chat, ask away. The classic "where did I put that fact" solver.
 
-**3. A safe sandbox for kids or guests.**
-User accounts with no admin rights, a small fast model as the
-default, web search off. They get AI help; you get no surprise cloud
-bills and no data leaving home.
+**3. A limited-access setup for guests.**
+Use accounts without admin rights, a small local model, and web search
+off. Check the other integrations for external calls. These settings
+limit access and cloud usage; they do not make the model's answers
+reliable or provide a complete child-safety system.
 
 **4. A writing and brainstorming desk.**
 Branching chats + saved Prompts (`/summarize`, `/formal-email`,
@@ -278,3 +302,7 @@ Docker examples checked against the [official quick start](https://docs.openwebu
 on October 10, 2026; not executed in this review. The `:main` and
 `:ollama` tags change over time. For repeatable deployments, select a
 release tag from the official project and record it with your setup.
+
+Privacy guidance uses the [Open WebUI FAQ](https://docs.openwebui.com/faq/)
+and [offline deployment guide](https://docs.openwebui.com/tutorials/maintenance/offline-mode/),
+reviewed October 10, 2026. No network-isolation test was performed.

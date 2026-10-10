@@ -110,7 +110,8 @@ Every request can carry an `options` block that tunes the model. The
 useful ones, in plain words:
 
 - **`temperature`** (0 to 2, default ~0.8): how wild the answers get.
-  Low (0.2) = careful and repeatable, good for facts and summaries.
+  Low (0.2) usually gives less varied wording, useful for consistent
+  summaries. It does not verify facts or guarantee identical answers.
   High (1.2+) = creative and surprising, good for stories and
   brainstorming.
 - **`num_ctx`** (default depends on your model and setup): how many tokens the model can see at
@@ -264,7 +265,9 @@ Best for quick questions while you work.
 Run Ollama on one always-on computer with `OLLAMA_HOST=0.0.0.0`,
 install Open WebUI (it runs in Docker with one command), and point
 it at the Ollama box. Everyone on the network gets a chat page; no
-account, no subscription, nothing leaves the house.
+cloud subscription required for local inference. Use downloaded local
+models and local integrations to keep prompts at home; cloud models,
+search, or other external services can send data outside.
 
 **3. Your own programs asking the model.**
 Any script that can make a web request can use `/api/chat` — a
@@ -281,7 +284,8 @@ thing with buttons instead of code.
 **5. Code help without the cloud.**
 Pull a coder model (`qwen2.5-coder`, `deepseek-coder-v2`,
 `starcoder2`), `ollama run` it, and paste code in. Nothing you paste
-ever leaves your machine — nice for private or work code.
+needs to leave your machine when inference and all integrations are
+local. Verify the selected model and front end before using private code.
 
 **6. Trying many models cheaply.**
 `ollama pull` five candidates, chat with each for ten minutes,

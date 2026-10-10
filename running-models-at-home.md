@@ -16,19 +16,48 @@ ollama run qwen3:8b      # talk to it
 That's it. Ollama keeps a server running in the background; `ollama
 run` opens a chat, and other programs can talk to the server too.
 
-## RAM: where the model lives
+## RAM, VRAM, and context: three separate budgets
 
-A running model lives in memory — GPU memory (VRAM) if you have a
-compatible GPU, regular RAM otherwise. Ollama handles this
-automatically: it uses the GPU when it can, CPU when it must.
+The model download needs **disk space**. Running it needs **working
+memory**. CPU inference uses system RAM; a dedicated GPU uses its own
+VRAM. Unified-memory systems share a pool with the OS and apps.
+See the [8, 16, and 32 GB examples](choosing-a-model.md#starting-points-for-a-computer-without-dedicated-gpu-memory).
 
-- **GPU (VRAM):** much faster, often 5–10x. Even an older gaming GPU
-  with 8GB+ VRAM transforms the experience.
-- **CPU (RAM):** works fine, just slower. A 7–8B model on a modern
-  CPU is perfectly usable for chat.
+Budget for **weights + KV cache + runtime buffers**, with room for the
+operating system and other programs. A model file that barely fits in
+your free memory may fail once a conversation starts.
 
-If the model doesn't fit in VRAM, Ollama splits it: some layers on
-GPU, the rest on CPU. Partial GPU is still faster than pure CPU.
+The **KV cache** saves attention information for the tokens being used.
+For conventional full-attention models, its memory grows roughly with
+context length and concurrent requests. The actual amount depends on
+the architecture, cache precision, and runtime; sliding-window models
+can behave differently. Weight quantization and cache quantization are
+separate settings. A Q4 download does not mean its cache is also Q4.
+
+Increasing context from 4K to 32K can greatly increase cache memory.
+It does not multiply the model's weight memory by eight. A model's
+advertised maximum context is a capability limit, not a recommended
+setting for every computer. Start modestly and measure before enlarging it.
+
+Ollama can use compatible GPUs and can split a model between CPU and
+GPU. Partial offloading may help, but speed depends on the split and
+transfer overhead; it is not guaranteed to beat every CPU-only setup.
+GPU compatibility, memory bandwidth, and available VRAM all matter.
+
+After a reply, run:
+
+```powershell
+ollama ps
+```
+
+The **PROCESSOR** column reports CPU, GPU, or a split. Compare system
+memory and dedicated GPU memory in your OS monitor as you increase
+context. Disk paging is different from intentional CPU offloading:
+paging under memory pressure can make replies painfully slow.
+
+**MoE models:** budget weights using total parameters, even when only
+a smaller number is active per token. Active count describes computation,
+not a shortcut to fitting all weights into that amount of RAM.
 
 ## Settings that matter
 
@@ -51,12 +80,12 @@ for saved defaults, use a Modelfile.
 
 **Keep-alive.** How long Ollama keeps a model loaded after you stop
 using it. Default is 5 minutes; `OLLAMA_KEEP_ALIVE=1h` keeps it warm
-for an hour so the next question starts instantly. Costs RAM while
+for an hour so the next question avoids reloading the weights. Costs RAM while
 idle — worth it on a dedicated box, less so on a laptop.
 
-**Temperature.** As in [How LLMs Work](how-llms-work.md): low for
-facts, high for creativity. Ollama default ~0.8; try 0.2 for RAG and
-summarization.
+**Temperature.** As in [How LLMs Work](how-llms-work.md): lower values reduce sampling variation; higher values allow more
+variation. Try 0.2 for consistent summaries, but check the source:
+a low-temperature answer can still be confidently false.
 
 ## Thinking models
 
@@ -68,17 +97,17 @@ Ollama's API, that's `"think": false`.)
 
 ## Multiple models at once
 
-Ollama can keep several models loaded, but they share your RAM. Three
-models loaded = three models' worth of memory. With a 1-hour
+Ollama can keep several models loaded, sharing available RAM and VRAM.
+Each needs weight memory, and concurrent requests need additional cache
+and buffers. Separate embedding models and the front end also add usage. With a 1-hour
 keep-alive it's easy to end up with a crowd squatting in RAM —
 `ollama ps` shows what's loaded, and `ollama stop <model>` evicts one.
 
 ## When it's slow, check this order
 
-1. **Prompt length** — thousands of tokens of context? That's the
-   usual culprit. (See [Tokens](tokens.md).)
+1. **Prompt length** — thousands of tokens of context? That can delay the first token. (See [Tokens](tokens.md).)
 2. **Thinking on** — disable it for simple questions.
-3. **Model too big** — swapped to disk/RAM? Check memory pressure.
+3. **Model too big** — check disk paging and CPU/GPU placement.
 4. **CPU contention** — something else hogging the machine?
 5. **Context window** — oversized `num_ctx` wastes RAM and time.
 
@@ -101,3 +130,8 @@ reporting a problem; model behavior and defaults can change.
 - [Modelfile parameters](https://docs.ollama.com/modelfile)
 - [Chat API](https://docs.ollama.com/api/chat)
 - [Embedding API](https://docs.ollama.com/api/embed)
+
+Hardware guidance also uses [Ollama's FAQ](https://docs.ollama.com/faq),
+[context guidance](https://docs.ollama.com/context-length), and
+[cache documentation](https://huggingface.co/docs/transformers/main/en/kv_cache).
+Memory estimates have not been benchmarked on specific hardware.

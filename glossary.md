@@ -215,7 +215,8 @@ If it ends in `.gguf`, Ollama and friends can run it.
 
 **GPU** — Graphics card. Originally for games, now the workhorse of
 AI: thousands of small cores that do the model's math in parallel. A
-model on GPU can run 5–10x faster than the same model on CPU.
+compatible GPU can accelerate inference; the gain depends on memory,
+model size, context, and how much work stays on the GPU.
 
 **Gradient descent** — The core training loop: measure the error,
 nudge every parameter slightly downhill against it, repeat billions
@@ -302,10 +303,10 @@ problem — and the reason models sometimes quote.
 develop its own internal optimizer with goals different from what it
 was trained for. The theoretical root of deceptive-alignment worries.
 
-**Mixture of Experts (MoE)** — A model made of smaller specialist
-sub-models ("experts"), where only a few activate per token. Acts
-bigger than its active size — e.g. a 47B MoE that only uses 13B at a
-time. More capability per gigabyte of active RAM.
+**Mixture of Experts (MoE)** — A model that routes each token through
+some of its expert components. Active parameters describe work per token;
+total parameters describe the full weights. For ordinary local inference,
+budget weight memory from the total, even when the active count is small.
 
 **Model collapse** — The feared spiral where models trained on
 AI-generated text get progressively worse — like a photocopy of a
@@ -384,8 +385,8 @@ fewer bits (Q4, Q5, Q8). Much smaller, slightly less capable. Q4 is
 the usual sweet spot.
 
 **RAG (Retrieval-Augmented Generation)** — Searching your documents
-for relevant chunks, then asking the model to answer from them. How
-to make a model knowledgeable about *your* stuff.
+for relevant chunks and adding them to the model's prompt. Ordinary
+RAG leaves model weights unchanged; answers still need verification.
 
 **ReAct** — An agent pattern: interleave **Rea**soning and **Act**ing
 — think a step, take a tool action, observe the result, repeat. The
@@ -491,7 +492,7 @@ behaves ("You are a helpful assistant…"). Set once per conversation.
 
 **Temperature** — How random the model's word choices are. Low
 (0.1–0.3) = focused and consistent. High (0.8+) = creative and
-unpredictable.
+unpredictable. Lower temperature does not guarantee correct facts.
 
 **Test-time compute** — See inference-time scaling: spending extra
 computation while answering rather than while training.

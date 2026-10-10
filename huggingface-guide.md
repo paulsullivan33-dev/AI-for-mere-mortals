@@ -11,7 +11,9 @@ Read it in pieces:
   newer is usually better.
 - **8B** — **8 billion parameters**. Parameters are the adjustable
   numbers inside the model (see [How LLMs Work](how-llms-work.md)).
-  Bigger = more capable, but also more RAM and slower. Common sizes:
+  Larger dense models generally need more weight memory and computation;
+  quality also depends on training and task. For MoE models, distinguish
+  total parameters (weight budget) from active parameters (work per token). Common sizes:
   1B, 3B, 7B/8B, 13B/14B, 32B, 70B.
 - **Instruct** — tuned to follow instructions and chat. This is what
   you want for asking questions. A *base* model (no "instruct") just
@@ -20,38 +22,40 @@ Read it in pieces:
 
 ## Quantization: "Q4_K_M"
 
-The original model uses 16 bits per parameter — precise but huge. A
+Many original releases use 16-bit weights, though precision varies. A
 **quantized** model squeezes each parameter into fewer bits: smaller
-file, less RAM, slightly less smart.
+file and lower weight-memory use, with a possible quality tradeoff.
 
-- **Q8_0** — barely smaller than original, barely dumber. The safe
-  choice if you have RAM to spare.
+- **Q8_0** — roughly half the raw weight size of a 16-bit version,
+  plus format overhead. Often preserves quality well.
 - **Q6_K / Q5_K_M** — good middle ground.
-- **Q4_K_M** — the sweet spot for most people: roughly 4x smaller
-  than original, and you'd struggle to notice the difference in
-  normal use.
+- **Q4_K_M** — a common compromise for local use. Raw 4-bit weights
+  are one quarter the size of 16-bit weights; actual files include
+  overhead and mixed precisions. Test quality on your tasks.
 - **Q3 / Q2** — tiny, but noticeably dumber. Only if you're desperate
   for RAM.
 
 The letters after the number are the exact recipe; don't sweat them.
-Just remember: **bigger number = bigger file = slightly smarter**.
+For the same base model, higher precision generally uses more memory
+and reduces quantization error; it doesn't guarantee better answers.
 
 ## GGUF
 
 The file format for running models on your own computer (`.gguf`
-files). If you see GGUF, it works with Ollama, llama.cpp, and friends.
-Other formats (safetensors, PyTorch) are for training and servers —
-ignore them for home use.
+files). Ollama and llama.cpp support many GGUF models, but the model's
+architecture and quantization must be supported by your runtime version.
+Other formats, including safetensors, can also be used locally with
+compatible software; GGUF is a common choice for this guide's workflow.
 
 A file named `qwen3-8b-q4_k_m.gguf` is: the qwen3 8B model, quantized
-to Q4_K_M, in the format your computer can run. That's the one you
-download.
+to Q4_K_M. Confirm runtime compatibility and available memory before
+downloading.
 
 ## Context length: "128K"
 
 How many [tokens](tokens.md) the model can consider at once. 4K is
 small, 32K is comfortable, 128K is generous. Bigger context needs more
-RAM *at runtime* — a 70B model with 128K context can need far more
+RAM or VRAM *at runtime* — a 70B model with 128K context can need far more
 memory than the model file alone suggests.
 
 ## License
@@ -77,7 +81,7 @@ involved.
 
 ## The 30-second evaluation
 
-1. Right size for my RAM? (see [Choosing a Model](choosing-a-model.md))
+1. Fits my available RAM/VRAM, including context and runtime overhead? (see [Choosing a Model](choosing-a-model.md))
 2. Instruct version?
 3. GGUF available, Q4 or Q5?
 4. Context length big enough for my use?

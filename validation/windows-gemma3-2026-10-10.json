@@ -1,0 +1,152 @@
+﻿{
+    "recorded_at":  "2026-10-10T18:13:25.7512555-05:00",
+    "powershell":  "5.1.26100.9444",
+    "os":  "Microsoft Windows 11 Home",
+    "os_version":  "10.0.26300",
+    "usable_system_ram_bytes":  33957662720,
+    "cpu":  [
+                "Intel(R) Core(TM) Ultra 9 288V"
+            ],
+    "gpu":  [
+                "Intel(R) Arc(TM) 140V GPU (16GB)"
+            ],
+    "ollama_client":  "ollama version is 0.40.2",
+    "ollama_server":  "0.40.2",
+    "model":  "gemma3:1b",
+    "samples":  [
+                    {
+                        "requested_context":  4096,
+                        "run":  1,
+                        "answer":  "Hi there! 😊",
+                        "done":  true,
+                        "elapsed_ms":  1517,
+                        "load_duration_ns":  1328098200,
+                        "prompt_eval_count":  16,
+                        "eval_count":  5,
+                        "eval_duration_ns":  82368000,
+                        "memory":  {
+                                       "available_system_bytes":  14523363328,
+                                       "ollama_working_set_bytes":  951820288,
+                                       "ollama_private_bytes":  1078992896
+                                   },
+                        "loaded_models":  "NAME         ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \ngemma3:1b    83be9dbf9dd6    880 MB    100% CPU     4096       llamacpp    4 minutes from now    "
+                    },
+                    {
+                        "requested_context":  4096,
+                        "run":  2,
+                        "answer":  "Hello! 😊",
+                        "done":  true,
+                        "elapsed_ms":  125,
+                        "load_duration_ns":  14278200,
+                        "prompt_eval_count":  16,
+                        "eval_count":  4,
+                        "eval_duration_ns":  57406000,
+                        "memory":  {
+                                       "available_system_bytes":  14523109376,
+                                       "ollama_working_set_bytes":  951631872,
+                                       "ollama_private_bytes":  1078763520
+                                   },
+                        "loaded_models":  "NAME         ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \ngemma3:1b    83be9dbf9dd6    880 MB    100% CPU     4096       llamacpp    4 minutes from now    "
+                    },
+                    {
+                        "requested_context":  8192,
+                        "run":  1,
+                        "answer":  "Hello there! 😊",
+                        "done":  true,
+                        "elapsed_ms":  1546,
+                        "load_duration_ns":  1331842900,
+                        "prompt_eval_count":  16,
+                        "eval_count":  5,
+                        "eval_duration_ns":  84311000,
+                        "memory":  {
+                                       "available_system_bytes":  14525886464,
+                                       "ollama_working_set_bytes":  979922944,
+                                       "ollama_private_bytes":  1173590016
+                                   },
+                        "loaded_models":  "NAME         ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \ngemma3:1b    83be9dbf9dd6    958 MB    100% CPU     8192       llamacpp    4 minutes from now    "
+                    },
+                    {
+                        "requested_context":  8192,
+                        "run":  2,
+                        "answer":  "Hello!",
+                        "done":  true,
+                        "elapsed_ms":  104,
+                        "load_duration_ns":  13732000,
+                        "prompt_eval_count":  16,
+                        "eval_count":  3,
+                        "eval_duration_ns":  38885000,
+                        "memory":  {
+                                       "available_system_bytes":  14519775232,
+                                       "ollama_working_set_bytes":  980242432,
+                                       "ollama_private_bytes":  1173880832
+                                   },
+                        "loaded_models":  "NAME         ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \ngemma3:1b    83be9dbf9dd6    958 MB    100% CPU     8192       llamacpp    4 minutes from now    "
+                    },
+                    {
+                        "requested_context":  32768,
+                        "run":  1,
+                        "answer":  "Hi there! 😊",
+                        "done":  true,
+                        "elapsed_ms":  1568,
+                        "load_duration_ns":  1320176700,
+                        "prompt_eval_count":  16,
+                        "eval_count":  5,
+                        "eval_duration_ns":  78439000,
+                        "memory":  {
+                                       "available_system_bytes":  14427193344,
+                                       "ollama_working_set_bytes":  1082273792,
+                                       "ollama_private_bytes":  1326583808
+                                   },
+                        "loaded_models":  "NAME         ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \ngemma3:1b    83be9dbf9dd6    1.0 GB    100% CPU     32768      llamacpp    4 minutes from now    "
+                    },
+                    {
+                        "requested_context":  32768,
+                        "run":  2,
+                        "answer":  "Hi there! How can I help you today?",
+                        "done":  true,
+                        "elapsed_ms":  271,
+                        "load_duration_ns":  10035000,
+                        "prompt_eval_count":  16,
+                        "eval_count":  11,
+                        "eval_duration_ns":  197874000,
+                        "memory":  {
+                                       "available_system_bytes":  14431465472,
+                                       "ollama_working_set_bytes":  1082585088,
+                                       "ollama_private_bytes":  1326882816
+                                   },
+                        "loaded_models":  "NAME         ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL              \ngemma3:1b    83be9dbf9dd6    1.0 GB    100% CPU     32768      llamacpp    4 minutes from now    "
+                    }
+                ],
+    "download_attempted":  false,
+    "model_metadata":  {
+                           "name":  "gemma3:1b",
+                           "model":  "gemma3:1b",
+                           "modified_at":  "2026-10-10T18:12:46.3712405-05:00",
+                           "size":  815319323,
+                           "digest":  "83be9dbf9dd6ea077de84d4fbaeb094dae9f266ca1b302f04e1c803bea566a79",
+                           "details":  {
+                                           "parent_model":  "",
+                                           "format":  "gguf",
+                                           "family":  "gemma3",
+                                           "families":  [
+                                                            "gemma3"
+                                                        ],
+                                           "parameter_size":  "999.89M",
+                                           "quantization_level":  "Q4_K_M",
+                                           "context_length":  32768,
+                                           "embedding_length":  1152,
+                                           "runner":  "llamacpp"
+                                       },
+                           "capabilities":  [
+                                                "completion"
+                                            ]
+                       },
+    "cli_answer":  "Language models are computational algorithms that have been rigorously trai\u001b[4D\u001b[K\ntrained on vast amounts of text data to understand and generate human-like \u001b[K\ntext. Basically, they predict the next word in a phrase based on the words \u001b[K\nalready there.\n\n\u001b[?2026h\u001b[?25l\u001b[1G⠙ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠙ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠸ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠸ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠴ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠴ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠧ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠧ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠏ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠏ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠙ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠹ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠸ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G⠸ \u001b[K\u001b[?25h\u001b[?2026l\u001b[?2026h\u001b[?25l\u001b[1G\u001b[K\u001b[?25h\u001b[?2026l\u001b[?25l\u001b[2K\u001b[1G\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h\u001b[?25l\u001b[?25h",
+    "baseline":  {
+                     "available_system_bytes":  15425851392,
+                     "ollama_working_set_bytes":  41746432,
+                     "ollama_private_bytes":  68120576
+                 },
+    "unload_passed":  true,
+    "status":  "passed"
+}

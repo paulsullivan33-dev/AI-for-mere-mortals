@@ -135,3 +135,7 @@ Hardware guidance also uses [Ollama's FAQ](https://docs.ollama.com/faq),
 [context guidance](https://docs.ollama.com/context-length), and
 [cache documentation](https://huggingface.co/docs/transformers/main/en/kv_cache).
 Memory estimates have not been benchmarked on specific hardware.
+
+For one measured small-model example, see the [Windows validation
+report](windows-validation.md). It records Gemma 3 1B CPU inference at
+three context settings; the broader hardware estimates remain unverified.

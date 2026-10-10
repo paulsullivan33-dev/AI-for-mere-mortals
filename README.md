@@ -11,6 +11,9 @@ and how they connect to running models yourself.
 [Your first local model on Windows](windows-first-run.md) walks through
 installation, a first answer, checks that it worked, and common fixes.
 
+[Windows validation results](windows-validation.md) record tested
+versions, measurements, and remaining checks, with a repeatable script.
+
 ## The guides
 
 1. [How LLMs Work](how-llms-work.md) — what a language model actually is,

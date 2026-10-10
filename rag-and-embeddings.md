@@ -1,15 +1,17 @@
 # RAG and Embeddings
 
 RAG (Retrieval-Augmented Generation) is how you get a model to answer
-from *your* documents instead of its training data. It's the single
-most useful technique for home AI.
+using passages retrieved from *your* documents alongside what it learned
+during training. It adds evidence to the prompt; it does not retrain the
+model or guarantee that it will stick to the evidence.
 
 ## The problem it solves
 
-A model knows what it was trained on — and nothing else. It doesn't
-know your notes, your novels, your manuals, or anything written after
-its training cutoff. You could paste a document into the chat, but
-that only works for short things.
+A model cannot reliably answer about private documents it has never
+been given. It can use new information supplied in a prompt or by tools,
+including information newer than its training. Pasting a document works
+when it fits within the usable context; larger collections need a way
+to select relevant material.
 
 RAG is the general solution: **find the relevant pieces, then ask.**
 
@@ -46,10 +48,11 @@ you supplied.
 
 ## Keep separate things separate
 
-One index per *kind* of thing. Your private notes and your novel
-collection should be different indexes — otherwise a question about
-your notes retrieves novel passages and vice versa. Retrieval can't
-tell "kinds" apart; only you can, by separating the indexes.
+Separate collections can make searches easier to control: your private
+notes and novels may belong in different collections. Systems can also
+use metadata filters or permissions within one index. Semantic similarity
+alone doesn't enforce those boundaries; choose the collection and filters
+appropriate to the question.
 
 ## What RAG doesn't fix
 
@@ -59,10 +62,21 @@ tell "kinds" apart; only you can, by separating the indexes.
 - **The model still predicts.** RAG grounds the answer, but the model
   can still misread or overstate what's in the chunks. For important
   things, check the cited passage.
-- **It's not memory.** The model doesn't *learn* your documents. Each
-  question re-retrieves from scratch.
+- **It doesn't train the model.** Ordinary RAG leaves its weights
+  unchanged. The application may save documents, indexes, chats, or
+  cached results and reuse them later. Those are application storage,
+  not new knowledge trained into the model.
+- **A citation isn't proof.** Ask it to say when the passages lack the
+  answer, then read the cited passage to verify the claim.
 
 ## The one-sentence summary
 
 RAG = search your stuff first, then let the model talk about what it
 found. It's a search engine and a summarizer holding hands.
+
+## Sources and review
+
+Reviewed October 10, 2026.
+
+- [Text generation and sampling](https://huggingface.co/docs/transformers/main/en/llm_tutorial)
+- [Retrieval and document context](https://docs.openwebui.com/features/chat-conversations/rag/)

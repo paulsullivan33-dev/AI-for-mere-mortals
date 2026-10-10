@@ -22,26 +22,34 @@ libraries, user accounts, and add-ons.
 The normal way is **Docker** — a tool that runs programs in sealed
 boxes called containers, so installation is one command and cleanup
 is easy. Install Docker first (from [docker.com](https://docker.com)),
-then pick your situation:
+then pick your situation. Commands below are single lines that work in
+PowerShell or Bash; paste each entire line. Start Docker Desktop first on
+Windows and check `docker version` shows both Client and Server.
+
+Before starting the container, generate a secret in PowerShell:
+
+```powershell
+$webuiSecretBytes = New-Object byte[] 32
+$webuiSecretGenerator = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+$webuiSecretGenerator.GetBytes($webuiSecretBytes)
+$webuiSecretGenerator.Dispose()
+$webuiSecret = [System.BitConverter]::ToString($webuiSecretBytes).Replace('-', '').ToLowerInvariant()
+```
+
+Keep this value private and reuse it when recreating the container. In
+Bash, set `webuiSecret=$(openssl rand -hex 32)` instead. Both shells expand
+`$webuiSecret` in the commands below.
 
 **Ollama is on the same computer:**
 
-```
-docker run -d -p 3000:8080 \
-  --add-host=host.docker.internal:host-gateway \
-  -v open-webui:/app/backend/data \
-  --name open-webui --restart always \
-  ghcr.io/open-webui/open-webui:main
+```powershell
+docker run -d -p 3000:8080 --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data -e WEBUI_SECRET_KEY=$webuiSecret --name open-webui --restart always ghcr.io/open-webui/open-webui:main
 ```
 
 **Ollama is on another computer** (your home server, say):
 
-```
-docker run -d -p 3000:8080 \
-  -e OLLAMA_BASE_URL=http://192.168.1.50:11434 \
-  -v open-webui:/app/backend/data \
-  --name open-webui --restart always \
-  ghcr.io/open-webui/open-webui:main
+```powershell
+docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=http://192.168.1.50:11434 -v open-webui:/app/backend/data -e WEBUI_SECRET_KEY=$webuiSecret --name open-webui --restart always ghcr.io/open-webui/open-webui:main
 ```
 
 (Replace the address with your Ollama machine's. The `-e` part sets
@@ -50,11 +58,8 @@ startup.)
 
 **Everything in one box** (Open WebUI *and* Ollama together):
 
-```
-docker run -d -p 3000:8080 \
-  -v ollama:/root/.ollama -v open-webui:/app/backend/data \
-  --name open-webui --restart always \
-  ghcr.io/open-webui/open-webui:ollama
+```powershell
+docker run -d -p 3000:8080 -v ollama:/root/.ollama -v open-webui:/app/backend/data -e WEBUI_SECRET_KEY=$webuiSecret --name open-webui --restart always ghcr.io/open-webui/open-webui:ollama
 ```
 
 Then open `http://localhost:3000` in your browser (or
@@ -202,9 +207,8 @@ Like Ollama, Open WebUI takes settings at startup with `-e`:
 - **`WEBUI_AUTH`** (`True`/`False`, default `True`) — the login
   page. Turning it off means anyone with the address walks in; only
   do that behind your own locked-down network, if ever.
-- **`WEBUI_SECRET_KEY`** — a random string that locks down stored
-  API keys used by Functions. Set it if you install functions that
-  need keys.
+- **`WEBUI_SECRET_KEY`** — a persistent secret used for authentication and
+  encryption. Set it before the first start and retain it for updates.
 - **`DATA_DIR`** — where Open WebUI keeps its database and uploads.
   Point it at a big disk if you'll store many documents.
 - **`PORT`** — the inside-the-container port (default 8080); you
@@ -267,3 +271,10 @@ models, RAG included.
 - [Choosing a Model](choosing-a-model.md) — which model to pull
   for each job.
 - [Glossary](glossary.md) — API, RAG, Docker, and the rest, A to Z.
+
+## Sources and verification
+
+Docker examples checked against the [official quick start](https://docs.openwebui.com/getting-started/quick-start/)
+on October 10, 2026; not executed in this review. The `:main` and
+`:ollama` tags change over time. For repeatable deployments, select a
+release tag from the official project and record it with your setup.

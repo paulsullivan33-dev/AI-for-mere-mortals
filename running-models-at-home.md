@@ -1,6 +1,7 @@
 # Running Models at Home
 
-You picked a model. Now let's run it. [Ollama](https://ollama.com) is
+You picked a model. Now let's run it. On Windows, start with the
+[step-by-step first-run guide](windows-first-run.md). [Ollama](https://ollama.com) is
 the easiest path — one program, works on Windows/Mac/Linux, handles
 downloading and running. Most of this guide assumes Ollama, but the
 ideas apply everywhere.
@@ -32,14 +33,21 @@ GPU, the rest on CPU. Partial GPU is still faster than pure CPU.
 ## Settings that matter
 
 **Context length (`num_ctx`).** How many tokens the model sees at
-once. Default is usually 4096. Bigger = handles longer documents but
+once. The default depends on your model and setup. Bigger = handles longer documents but
 uses more RAM and runs slower. Set it per task:
 
 ```
-ollama run qwen3:8b -- --num-ctx 8192
+ollama run qwen3:8b
 ```
 
-(or via the API's `options` — check your tool's docs).
+Then type this **inside the chat**, not at the PowerShell prompt:
+
+```text
+/set parameter num_ctx 8192
+```
+
+For scripts, use `options: { "num_ctx": 8192 }` in the API request;
+for saved defaults, use a Modelfile.
 
 **Keep-alive.** How long Ollama keeps a model loaded after you stop
 using it. Default is 5 minutes; `OLLAMA_KEEP_ALIVE=1h` keeps it warm
@@ -80,3 +88,16 @@ Start small and local: one model, CPU is fine, learn what "fast
 enough" feels like. Add a GPU when you know which models you actually
 use. The best home AI setup is the one that's running when you want
 it — not the biggest one you could theoretically build.
+
+## Sources and verification
+
+Examples checked against official documentation and Ollama CLI source on
+October 10, 2026. They have not been executed on a Windows machine as
+part of this review. Record your version with `ollama --version` when
+reporting a problem; model behavior and defaults can change.
+
+- [Ollama CLI](https://docs.ollama.com/cli)
+- [CLI source and interactive commands](https://github.com/ollama/ollama/blob/main/cmd/interactive.go)
+- [Modelfile parameters](https://docs.ollama.com/modelfile)
+- [Chat API](https://docs.ollama.com/api/chat)
+- [Embedding API](https://docs.ollama.com/api/embed)

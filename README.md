@@ -54,3 +54,6 @@ AI has a habit of sounding complicated on purpose. These guides try to
 say the simple thing plainly. If a term appears before it's explained,
 check the glossary — and if something's still confusing, that's the
 guide's fault, not yours.
+
+Every guide follows the same [writing criteria](criteria.md): plain
+words, no hype, honest limits, and checkable steps.

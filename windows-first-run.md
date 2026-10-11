@@ -93,6 +93,10 @@ moment, so run `ollama ps` again after a few seconds if needed. If enough time h
 passed, Ollama may already have unloaded it automatically.
 The download stays on disk, ready for your next `ollama run`.
 
+If the PROCESSOR column shows 100% CPU when you expect your graphics
+card to be used, check that no other program is holding Ollama's port
+(11434) — a stray server there blocks GPU detection.
+
 ## What to try next
 
 - [Choosing a Model](choosing-a-model.md): select a more capable model

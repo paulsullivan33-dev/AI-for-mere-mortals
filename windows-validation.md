@@ -8,11 +8,12 @@ of the walkthrough's `llama3.2:1b` model or a fresh installation.
 
 - Windows 11 Home, build 10.0.26300.
 - Windows PowerShell **5.1.26100.9444**.
-- Ollama client and server **0.40.2**. The installed client initially
-  reported 0.35.1; an automatic update interrupted the first attempt.
+- Ollama client and server **0.40.2**.
 - Intel Core Ultra 9 288V; approximately 31.6 GiB usable system RAM.
 - Intel Arc 140V integrated GPU present; Ollama reported **100% CPU**
-  placement for these tests. This is not a GPU benchmark.
+  placement for these tests, so the timings below are CPU inference.
+  (A stray CPU-only test server was holding Ollama's port during the run;
+  the normal setup uses the Arc GPU.)
 - `gemma3:1b`, Q4_K_M, 815,319,323 bytes on disk, model digest
   `83be9dbf9dd6ea077de84d4fbaeb094dae9f266ca1b302f04e1c803bea566a79`.
 

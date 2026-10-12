@@ -1,0 +1,25 @@
+site_name: AI for Mere Mortals
+site_description: Plain-language AI guides for the home lab — no CS degree required.
+site_url: https://paulsullivan33-dev.github.io/AI-for-mere-mortals/
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - How LLMs Work: how-llms-work.md
+  - Tokens: tokens.md
+  - Choosing a Model: choosing-a-model.md
+  - Running Models at Home: running-models-at-home.md
+  - Ollama Guide: ollama-guide.md
+  - Open WebUI Guide: open-webui-guide.md
+  - HuggingFace Guide: huggingface-guide.md
+  - RAG and Embeddings: rag-and-embeddings.md
+  - Windows First Run: windows-first-run.md
+  - Getting Useful Help: getting-useful-help.md
+  - Trusting AI Answers: trusting-ai-answers.md
+  - Windows Validation: windows-validation.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md
